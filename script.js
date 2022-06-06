@@ -107,7 +107,50 @@ class Platform {
   }
 }
 const platform = new Platform();
-platform.draw();
+
+const bgLayer1 = new Image();
+bgLayer1.src = "bg1.png";
+const bgLayer2 = new Image();
+bgLayer2.src = "bg2.png";
+const bgLayer3 = new Image();
+bgLayer3.src = "bg3.png";
+const bgLayer4 = new Image();
+bgLayer4.src = "bg4.png";
+
+class Background {
+  constructor(image, speedMod) {
+    this.x = 0;
+    this.y = 0;
+    this.width = 2400;
+    this.height = 1000;
+    this.x2 = this.width;
+    this.image = image;
+    this.speedMod = speedMod;
+    this.speed = gameSpeed * this.speedMod;
+  }
+  update() {
+    this.speed = gameSpeed * this.speedMod;
+    if (this.x <= -this.width) {
+      this.x = this.width + this.x2 - this.speed;
+    }
+    if (this.x2 <= -this.width) {
+      this.x2 = this.width + this.x - this.speed;
+    }
+    this.x = Math.floor(this.x - this.speed);
+    this.x2 = Math.floor(this.x2 - this.speed);
+  }
+  draw() {
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.image, this.x2, this.y, this.width, this.height);
+  }
+}
+
+const bg1 = new Background(bgLayer1, 0.5);
+const bg2 = new Background(bgLayer2, 0.5);
+const bg3 = new Background(bgLayer3, 0.5);
+const bg4 = new Background(bgLayer4, 1.0);
+
+const backgrounds = [bg1, bg2, bg3, bg4];
 
 let ravens = []; // has to be "let" not "const" because we want to reassign raven array later in line 50
 let images = [];
@@ -305,6 +348,8 @@ pauseBtn.addEventListener("click", togglePause);
 
 let pauseTime = 0;
 
+let loopRun = null;
+
 function animate(timestamp) {
   // console.log({ timestamp });
 
@@ -323,6 +368,10 @@ function animate(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // this cleans the currentFrame of oldFrame drawings
     // raven.update();
     // raven.draw();
+    backgrounds.forEach((background) => {
+      background.update();
+      background.draw();
+    });
 
     currentTime = storeTime - Math.floor(timestamp / 1000);
     // currentTime = 30 - Math.floor(6000 / 1000);
@@ -459,7 +508,7 @@ function animate(timestamp) {
   }
 
   // timestamp -= 1000;
-  requestAnimationFrame(animate); // this will create infinite loop, and also parse in 'timestamp' value;
+  loopRun = requestAnimationFrame(animate); // this will create infinite loop, and also parse in 'timestamp' value;
 
   // animate(timestamp);
 }
@@ -511,3 +560,19 @@ addEventListener("keyup", ({ keyCode }) => {
       break;
   }
 });
+
+// ends game instead of start game lmao but at least now we have a stop button
+
+function startGame() {
+  console.log("start game");
+  requestAnimationFrame(animate);
+}
+
+function stopGame() {
+  console.log("stop game");
+  cancelAnimationFrame(loopRun);
+}
+
+document.querySelector("#startBtn").addEventListener("click", startGame);
+document.querySelector("#stopBtn").addEventListener("click", stopGame);
+
