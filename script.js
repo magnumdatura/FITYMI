@@ -565,6 +565,27 @@ addEventListener("keyup", ({ keyCode }) => {
 });
 
 let explosions = [];
+let sounds = [];
+
+function randomSounds() {
+  // how to randomize the words that get loaded into the raven class
+  sound0 = new Audio();
+  sound1 = new Audio();
+  sound2 = new Audio();
+  sound3 = new Audio();
+  sound4 = new Audio();
+  sound0.src = "boom.wav";
+  sound1.src = "boom2.wav";
+  sound2.src = "boom3.wav";
+  sound3.src = "boom4.wav";
+  sound4.src = "boom5.wav";
+  sounds.push(sound0);
+  sounds.push(sound1);
+  sounds.push(sound2);
+  sounds.push(sound3);
+  sounds.push(sound4);
+}
+randomSounds();
 
 class Explosion {
   constructor(x, y, size) {
@@ -577,8 +598,7 @@ class Explosion {
     this.y = y;
     this.frame = 0;
     this.maxFrame = 4;
-    this.sound = new Audio();
-    this.sound.src = "boom.wav";
+    this.sound = sounds[Math.floor(Math.random() * sounds.length)];
     // this.timeSinceLastFrame = 0;
     // this.frameInterval = 200;
     this.counter = 0;
@@ -625,6 +645,7 @@ addEventListener("click", function (e) {
       raven.markedForDeletion = true;
       score += 3;
       explosions.push(new Explosion(raven.x, raven.y, raven.width));
+      // explosions.markedForDeletion = true;
       console.log(explosions);
     }
   });
