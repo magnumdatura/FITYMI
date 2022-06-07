@@ -352,12 +352,18 @@ let loopRun = null;
 
 function animate(timestamp) {
   // console.log({ timestamp });
-
+  // let nextPause = timestamp - pauseTime;
   if (!playing) {
     if (pauseTime === 0) {
       pauseTime = timestamp;
-    } else {
+    }
+    // else if (nextPause > pauseTime) {
+    //   pauseTime = timestamp - pauseTime;
+    // }
+    else {
+      pauseTime -= pauseTime;
       storeTime = 30 + Math.floor((timestamp - pauseTime) / 1000);
+      score = 0;
       // console.log(storeTime);
     }
   }
@@ -474,7 +480,7 @@ function animate(timestamp) {
           player.x <= raven.x + raven.width
         ) {
           player.velocity.y = 0;
-          score += 1;
+          score += 1; // +score condition
         } else if (
           player.y + player.height <= raven.y &&
           player.y + player.height + player.velocity.y >= raven.y &&
@@ -575,4 +581,3 @@ function stopGame() {
 
 document.querySelector("#startBtn").addEventListener("click", startGame);
 document.querySelector("#stopBtn").addEventListener("click", stopGame);
-
