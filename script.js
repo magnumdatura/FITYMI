@@ -8,10 +8,6 @@ canvas.height = window.innerHeight;
 let score = 0; // SCORE
 ctx.font = "50px Impact";
 
-let timeToNextRaven = 0;
-let ravenInterval = 3500;
-let lastTime = 0; // hold value of timestamp of previous loop
-
 const gravity = 0.15;
 const gameSpeed = 6;
 
@@ -309,11 +305,11 @@ function reset() {
 let storeTime = 30;
 let currentTime = 0;
 let pauseBtn = document.querySelector("#pauseBtn");
-let playing = true;
+let playing = false;
 function togglePause() {
-  console.log("pause button is clicked");
+  // console.log("pause button is clicked");
   playing = !playing;
-
+  pauseBtn.innerText = "RESTART";
   // if (!playing) {
   //   console.log({ storeTime });
   //   storeTime = currentTime;
@@ -346,6 +342,9 @@ function togglePause() {
 }
 pauseBtn.addEventListener("click", togglePause);
 
+let timeToNextRaven = 0;
+let ravenInterval = 3500;
+let lastTime = 0; // hold value of timestamp of previous loop
 let pauseTime = 0;
 
 let loopRun = null;
@@ -372,8 +371,7 @@ function animate(timestamp) {
     pauseTime = 0;
     // takes miliseconds
     ctx.clearRect(0, 0, canvas.width, canvas.height); // this cleans the currentFrame of oldFrame drawings
-    // raven.update();
-    // raven.draw();
+
     backgrounds.forEach((background) => {
       background.update();
       background.draw();
@@ -405,9 +403,10 @@ function animate(timestamp) {
 
     // fantasy.forEach((object) => object.update());
     // fantasy.forEach((object) => object.draw());
-    [...ravens].forEach((object) => object.update()); // so even if we add other class' arrays, this can activate all their update() / draw() but only if those functions are also defined in those other classes, like class Enemies{} or class Bullets{}
-    [...ravens].forEach((object) => object.draw());
+    [...ravens, ...explosions].forEach((object) => object.update()); // so even if we add other class' arrays, this can activate all their update() / draw() but only if those functions are also defined in those other classes, like class Enemies{} or class Bullets{}
+    [...ravens, ...explosions].forEach((object) => object.draw());
     ravens = ravens.filter((object) => !object.markedForDeletion); // only print out into ravens array the objects that have markedForDeletion = false
+    explosions = explosions.filter((object) => !object.markedForDeletion);
     // this is where to see what ravens are on screen
     //   console.log(ravens);
     //   console.log(ravens.length);
@@ -462,7 +461,7 @@ function animate(timestamp) {
       player.velocity.y = 0;
     }
 
-    console.log(ravens);
+    // console.log(ravens);
     if (ravens.length !== 0) {
       // just use forEach to determine collision detection for all ravens in array instead
       ravens.forEach((raven) => {
@@ -512,10 +511,8 @@ function animate(timestamp) {
       reset();
     }
   }
-
   // timestamp -= 1000;
   loopRun = requestAnimationFrame(animate); // this will create infinite loop, and also parse in 'timestamp' value;
-
   // animate(timestamp);
 }
 
@@ -567,17 +564,87 @@ addEventListener("keyup", ({ keyCode }) => {
   }
 });
 
+let explosions = [];
+
+class Explosion {
+  constructor(x, y, size) {
+    this.image = new Image();
+    this.image.src = "boom.png";
+    this.spriteWidth = 200;
+    this.spriteHeight = 179;
+    this.size = size;
+    this.x = x;
+    this.y = y;
+    this.frame = 0;
+    this.maxFrame = 4;
+    this.sound = new Audio();
+    this.sound.src = "boom.wav";
+    // this.timeSinceLastFrame = 0;
+    // this.frameInterval = 200;
+    this.counter = 0;
+    this.markedForDeletion = false;
+  }
+  update() {
+    if (this.frame === 0) this.sound.play();
+    if (this.frame > this.maxFrame) this.frame = 0;
+    if (this.frame > 5) this.markedForDeletion = true;
+    else if (this.counter == 20) {
+      this.frame++;
+      this.counter = 0;
+    } else this.counter++;
+    // this.timeSinceLastFrame += deltaTime;
+    // if (this.timeSinceLastFrame > this.frameInterval) {
+    //   this.frame++;
+
+    // }
+  }
+  draw() {
+    ctx.drawImage(
+      this.image,
+      this.frame * this.spriteWidth,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x,
+      this.y,
+      this.size,
+      this.size
+    );
+  }
+}
+
+addEventListener("click", function (e) {
+  console.log(e.x, e.y);
+  ravens.forEach((raven) => {
+    if (
+      e.y >= raven.y &&
+      e.y <= raven.y + raven.height &&
+      e.x >= raven.x &&
+      e.x <= raven.x + raven.width
+    ) {
+      raven.markedForDeletion = true;
+      score += 3;
+      explosions.push(new Explosion(raven.x, raven.y, raven.width));
+      console.log(explosions);
+    }
+  });
+});
+
 // ends game instead of start game lmao but at least now we have a stop button
 
-function startGame() {
-  console.log("start game");
-  requestAnimationFrame(animate);
-}
+// function startGame() {
+//   console.log("start game");
+// let startDiv = document.querySelector("#start-screen");
+// let gameCanvas = document.querySelector("#canvas1");
+// startDiv.style.display = "none";
+// gameCanvas.style.display = "block";
+// animate(0);
+// }
 
 function stopGame() {
   console.log("stop game");
   cancelAnimationFrame(loopRun);
 }
 
-document.querySelector("#startBtn").addEventListener("click", startGame);
+// document.querySelector("#startBtn").addEventListener("click", startGame);
 document.querySelector("#stopBtn").addEventListener("click", stopGame);
