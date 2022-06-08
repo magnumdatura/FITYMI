@@ -28,7 +28,7 @@ body {
   background-repeat: no-repeat;
   background-position: bottom;
   position: fixed;
-  top: 35%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%);
   z-index: 10;
@@ -40,11 +40,14 @@ body {
 }
 
 p {
-  background-image: radial-gradient(grey, white);
-  font-family: Toy;
-  color: black;
+  /* background-image: radial-gradient(grey, white); */
+  color: white;
   font-size: 20px;
-  border-radius: 15px;
-  margin-right: 20%;
-  margin-left: 20%;
+  /* border-radius: 15px; */
+  /* margin-right: 20%;
+  margin-left: 20%; */
+  width: 50%;
+  line-height: 5pt;
+  font-family: "ZCOOL KuaiLe", cursive;
+  display: inline-block;
 }
