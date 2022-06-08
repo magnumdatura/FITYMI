@@ -365,7 +365,7 @@ function animate(timestamp) {
     // }
     else {
       pauseTime -= pauseTime;
-      storeTime = 30 + Math.floor((timestamp - pauseTime) / 1000);
+      storeTime = 45 + Math.floor((timestamp - pauseTime) / 1000);
       score = 0;
       // console.log(storeTime);
     }
@@ -507,7 +507,7 @@ function animate(timestamp) {
     }
 
     //win-lose condition
-    if (score >= 25 && currentTime > 0 && currentTime < 30) {
+    if (score >= 25 && currentTime > 0 && currentTime < 45) {
       alert("You win!");
       score = 0;
       reset();
@@ -581,16 +581,40 @@ function randomSounds() {
   sound2 = new Audio();
   sound3 = new Audio();
   sound4 = new Audio();
+  sound5 = new Audio();
+  sound6 = new Audio();
+  sound7 = new Audio();
+  sound8 = new Audio();
+  sound9 = new Audio();
+  sound10 = new Audio();
+  sound11 = new Audio();
+  sound12 = new Audio();
   sound0.src = "boom.wav";
   sound1.src = "boom2.wav";
   sound2.src = "boom3.wav";
   sound3.src = "boom4.wav";
   sound4.src = "boom5.wav";
+  sound5.src = "boom6.wav";
+  sound6.src = "boom7.wav";
+  sound7.src = "boom8.wav";
+  sound8.src = "boom9.wav";
+  sound9.src = "boom10.wav";
+  sound10.src = "boom11.wav";
+  sound11.src = "boom12.wav";
+  sound12.src = "boom13.wav";
   sounds.push(sound0);
   sounds.push(sound1);
   sounds.push(sound2);
   sounds.push(sound3);
   sounds.push(sound4);
+  sounds.push(sound5);
+  sounds.push(sound6);
+  sounds.push(sound7);
+  sounds.push(sound8);
+  sounds.push(sound9);
+  sounds.push(sound10);
+  sounds.push(sound11);
+  sounds.push(sound12);
 }
 randomSounds();
 
