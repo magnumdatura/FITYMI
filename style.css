@@ -47,7 +47,8 @@ p {
   /* margin-right: 20%;
   margin-left: 20%; */
   width: 50%;
-  line-height: 5pt;
-  font-family: "ZCOOL KuaiLe", cursive;
+  line-height: 15pt;
+  font-family: "Permanent Marker", cursive;
   display: inline-block;
+  /* background: rgba(251, 160, 4, 0.5); */
 }
