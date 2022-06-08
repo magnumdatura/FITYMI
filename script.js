@@ -101,6 +101,9 @@ class Platform {
     ctx.fillStyle = "black";
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+  // move() {
+  //   ctx.clearRect(this.x, this.y, this.width, this.height);
+  // }
 }
 const platform = new Platform();
 
@@ -310,6 +313,7 @@ function togglePause() {
   // console.log("pause button is clicked");
   playing = !playing;
   pauseBtn.innerText = "RESTART";
+  document.querySelector("#instructions").remove();
   // if (!playing) {
   //   console.log({ storeTime });
   //   storeTime = currentTime;
@@ -343,7 +347,7 @@ function togglePause() {
 pauseBtn.addEventListener("click", togglePause);
 
 let timeToNextRaven = 0;
-let ravenInterval = 3500;
+let ravenInterval = 3000;
 let lastTime = 0; // hold value of timestamp of previous loop
 let pauseTime = 0;
 
@@ -430,7 +434,9 @@ function animate(timestamp) {
 
     // PLAYER animations
     drawScoreTimer();
+
     platform.draw();
+
     player.update();
 
     if (keys.right.pressed && player.x <= canvas.width - player.width) {
@@ -479,7 +485,8 @@ function animate(timestamp) {
           player.x <= raven.x + raven.width
         ) {
           player.velocity.y = 0;
-          score += 1; // +score condition
+          score += 0.5; // +score condition
+          // raven.markedForDeletion = true;
         } else if (
           player.y + player.height <= raven.y &&
           player.y + player.height + player.velocity.y >= raven.y &&
@@ -487,7 +494,7 @@ function animate(timestamp) {
           player.x + player.width >= raven.x &&
           player.x <= raven.x + raven.width
         ) {
-          player.velocity.y += raven.directionY;
+          player.velocity.y = 0;
         }
       });
     }
@@ -500,7 +507,7 @@ function animate(timestamp) {
     }
 
     //win-lose condition
-    if (score >= 30 && currentTime > 0 && currentTime < 30) {
+    if (score >= 25 && currentTime > 0 && currentTime < 30) {
       alert("You win!");
       score = 0;
       reset();

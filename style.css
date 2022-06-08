@@ -1,3 +1,9 @@
+body {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
 #canvas1 {
   border: 5px solid black;
   position: absolute;
@@ -8,4 +14,18 @@
   height: 720px;
 }
 
+#start-screen {
+  position: fixed;
+}
 
+#instructions {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 10;
+}
+
+#pauseBtn {
+  margin: 0px 50px;
+}
