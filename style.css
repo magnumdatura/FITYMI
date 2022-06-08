@@ -6,6 +6,7 @@ body {
 
 #canvas1 {
   border: 5px solid black;
+  background-color: black;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -15,17 +16,35 @@ body {
 }
 
 #start-screen {
+  background-color: white;
   position: fixed;
+  z-index: 10;
 }
 
 #instructions {
+  /* background: white; */
+  background-image: url("starter.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
   position: fixed;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%);
   z-index: 10;
 }
 
 #pauseBtn {
-  margin: 0px 50px;
+  /* margin: 0px 50px; */
+  margin: 0 auto;
+}
+
+p {
+  background-image: radial-gradient(grey, white);
+  font-family: Toy;
+  color: black;
+  font-size: 20px;
+  border-radius: 15px;
+  margin-right: 20%;
+  margin-left: 20%;
 }
