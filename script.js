@@ -305,6 +305,9 @@ function reset() {
   player = new Player();
 }
 
+const startSound = document.querySelector("#startSound");
+// startSound.play();
+
 let storeTime = 30;
 let currentTime = 0;
 let pauseBtn = document.querySelector("#pauseBtn");
@@ -314,6 +317,7 @@ function togglePause() {
   playing = !playing;
   pauseBtn.innerText = "RESTART";
   document.querySelector("#instructions").remove();
+  startSound.remove();
   // if (!playing) {
   //   console.log({ storeTime });
   //   storeTime = currentTime;
