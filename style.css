@@ -27,16 +27,16 @@ body {
 
 #instructions {
   /* background: white; */
-  background-image: url("starter.png");
+  background-image: url("starter.gif");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center;
   position: fixed;
   top: 20%;
   left: 50%;
   transform: translate(-50%);
   z-index: 10;
-  max-height: 70%;
+  max-height: 80%;
 }
 
 #pauseBtn {
@@ -46,7 +46,7 @@ body {
 
 p {
   /* background-image: radial-gradient(grey, white); */
-  color: white;
+  color: black;
   font-size: 25px;
   /* border-radius: 15px; */
   /* margin-right: 20%;
