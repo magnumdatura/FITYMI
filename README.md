@@ -1,7 +1,15 @@
 https://magnumdatura.github.io/Awesome-project/
 https://fake-it-till-you-make-it.netlify.app/
 
+# About the Game
+
+'Fake It Till You Make It' is about my journey learning code @ GA so far. It's about improvising and enjoying the process even when things don't always go to plan and you have to adapt to failures, blockages and bugs.
+
+The game is a platformer with a loose 'shooter' function that unlocks sonics when you click on the platforms. You score points by landing on the right platforms. You score extra points by eliminating (clicking) the platforms you think you don't need to survive. But really the point is to catch a vibe, and scoring points along the way is just a fun part of the journey.
+
 # Approach Taken
+
+Ethos: Is it possible to write code that can enfold and improvise with bugs rather than trying to eliminate them?
 
 Wanted to work with animations - images and sounds. Initial pitch was a platformer where the floor was lava and you had to survive the countdown timer by jumping on randomly generated floating platforms. Stretch goals were then to be able to shoot the platforms you didn't need to get extra points.
 
@@ -11,7 +19,9 @@ Came across interesting side-scroller shooter tutorials on youtube (Frank's labo
 
 # Technologies used
 
-Worked mostly in Javascript, learnt how to use the canvas API. It was really fun to think about the side-scroller function, how to generate random objects from constructor classes and set them in motion, thinking about collision physics and the different game states relating to score and timing. My favorite code in doing this exercise were: the constructor classes with their embedded methods, the animate loop, forEach and filter to run methods on multiple objects of the constructor classes which made life much easier. Also learning to load and randomly iterate through image and audio srcs was incredibly fun.
+Worked mostly in Javascript, learnt how to use the canvas API. It was really fun to think about the side-scroller function, how to generate random objects from constructor classes and set them in motion, thinking about collision physics and the different game states relating to score and timing.
+
+My favorite code in doing this exercise were: the constructor classes with their embedded methods, the animate loop, forEach and filter to run methods on multiple objects of the constructor classes which made life much easier. Also learning to load and randomly iterate through image and audio srcs was incredibly fun.
 
 # Installation instructions
 

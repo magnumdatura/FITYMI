@@ -512,11 +512,15 @@ function animate(timestamp) {
 
     //win-lose condition
     if (score >= 35 && currentTime > 0 && currentTime < 45) {
-      alert("You win!");
+      // alert("You win!");
+      window.confirm("You win!")
+      window.location.reload();
       score = 0;
       reset();
     } else if (score <= -5 || currentTime <= 0) {
-      alert("You lose!");
+      // alert("You lose!");
+      window.confirm("You lose!")
+      window.location.reload();
       score = 0;
       timestamp = 0;
       reset();
