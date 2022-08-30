@@ -9,7 +9,7 @@ let score = 0; // SCORE
 ctx.font = "50px Impact";
 
 const gravity = 0.15;
-const gameSpeed = 6;
+const gameSpeed = 2;
 
 class Player {
   constructor() {
@@ -27,7 +27,7 @@ class Player {
     this.image.src = "player.png";
     this.frame = 0;
     this.maxFrame = 4;
-    this.counter = 0;
+    this.counter = 0; // this acts as timer for next time to render next frame
   }
 
   draw() {
@@ -57,7 +57,7 @@ class Player {
     }
     // else this.velocity.y = 0; // here so he doesnt FALL THRU FLOOR
     if (this.frame > this.maxFrame) this.frame = 0;
-    else if (this.counter == 6) {
+    else if (this.counter == 16) {
       this.frame++;
       this.counter = 0;
     } else this.counter++;
@@ -306,18 +306,29 @@ function reset() {
 }
 
 const startSound = document.querySelector("#startSound");
-// startSound.play();
+startSound.play();
 
 let storeTime = 30;
 let currentTime = 0;
+
 let pauseBtn = document.querySelector("#pauseBtn");
 let playing = false;
+
+let restartBtn = document.querySelector("#restartBtn");
+function toggleRestart() {
+  location.reload();
+}
+restartBtn.addEventListener("click", toggleRestart);
+restartBtn.style.display = "none";
+
 function togglePause() {
   // console.log("pause button is clicked");
   playing = !playing;
-  pauseBtn.innerText = "RESTART";
+  pauseBtn.innerText = "PAUSE";
   document.querySelector("#instructions").remove();
+  restartBtn.style.display = "block";
   startSound.remove();
+  
   // if (!playing) {
   //   console.log({ storeTime });
   //   storeTime = currentTime;
@@ -350,6 +361,10 @@ function togglePause() {
 }
 pauseBtn.addEventListener("click", togglePause);
 
+
+
+
+
 let timeToNextRaven = 0;
 let ravenInterval = 3000;
 let lastTime = 0; // hold value of timestamp of previous loop
@@ -368,14 +383,18 @@ function animate(timestamp) {
     //   pauseTime = timestamp - pauseTime;
     // }
     else {
+      // console.log(timestamp);
       pauseTime -= pauseTime;
+      
+      // console.log(Math.floor((timestamp - pauseTime) /1000));
+      // console.log(pauseTime);
       storeTime = 45 + Math.floor((timestamp - pauseTime) / 1000);
       score = 0;
       // console.log(storeTime);
     }
   }
 
-  if (playing === true) {
+  if (playing) {
     pauseTime = 0;
     // takes miliseconds
     ctx.clearRect(0, 0, canvas.width, canvas.height); // this cleans the currentFrame of oldFrame drawings
